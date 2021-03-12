@@ -92,7 +92,6 @@ export const uploadSubImage = async (req: Request, res: Response) => {
     const file = req.file
     const sub = res.locals.sub
     const type = req.body.type
-    console.log(type,file)
     try {
         if(type !== 'image' && type !== 'banner'){
             fs.unlinkSync(file.path)

@@ -48,12 +48,7 @@ export const login = async ( req: Request, res: Response, next:NextFunction) => 
             //if its match set create token and set Cookie and send it to a Client back
             if(isMatch){
                 const token = jwt.sign({ username: user.username },process.env.JWT_SECRET!)
-                res.set('Set-Cookie',cookie.serialize('token',token,{
-                    maxAge:3600,
-                    sameSite:true,
-                    path:'/'
-                }))
-                res.json({ username,email:user.email })
+                res.json({ username,email:user.email,token })
             }else{
                 throw new Error("User with that username or password doesn't exist")
             }
@@ -76,19 +71,4 @@ export const me = (req:Request, res: Response) => {
     }else{
         res.status(302).json({ error:'User not logged' })
     }
-}
-
-export const logout = (req:Request, res: Response) => {
-    //set a token Http cookie on response with maxAge of 1 so its imidiatly expire
-    try {
-        res.set('Set-Cookie',cookie.serialize('token','',{
-            maxAge:1,
-            sameSite:true,
-            path:'/',
-        }))
-        res.json({ success:true })
-    } catch (error) {
-        res.json('Something went wrong')
-    }
-    
 }
