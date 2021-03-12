@@ -6,6 +6,7 @@ export default async (req:Request,res: Response, next: NextFunction) => {
     try {
         if(req.cookies.token){
             let token = req.cookies.token
+            console.log(req.cookies,req.cookies.token)
             let { username }: any = jwt.verify(token,process.env.JWT_SECRET!)
             let user: UserDocument | null | any = await User.findOne({ username },'username email _id')
             res.locals.user = user
