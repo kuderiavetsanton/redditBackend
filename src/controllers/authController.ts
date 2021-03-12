@@ -30,9 +30,6 @@ export const register = async (req:Request, res:Response, next: NextFunction) =>
             const key = Object.keys(error.keyValue)[0]
             res.status(400).json({errors:{[key]:`Your ${key} is already taken`}})
         }else if (error){
-            console.log('some')
-            console.log('zaebalsia')
-            console.log('wtf')
             console.log(error)
             res.status(500).json({error:error,message:'that error'})
         }
@@ -52,7 +49,6 @@ export const login = async ( req: Request, res: Response, next:NextFunction) => 
             if(isMatch){
                 const token = jwt.sign({ username: user.username },process.env.JWT_SECRET!)
                 res.set('Set-Cookie',cookie.serialize('token',token,{
-                    httpOnly:true,
                     maxAge:3600,
                     sameSite:true,
                     path:'/'
@@ -86,11 +82,9 @@ export const logout = (req:Request, res: Response) => {
     //set a token Http cookie on response with maxAge of 1 so its imidiatly expire
     try {
         res.set('Set-Cookie',cookie.serialize('token','',{
-            httpOnly:true,
             maxAge:1,
             sameSite:true,
             path:'/',
-            secure: process.env.NODE_ENV === 'production'
         }))
         res.json({ success:true })
     } catch (error) {
