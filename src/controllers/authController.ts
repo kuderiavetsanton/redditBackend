@@ -14,7 +14,7 @@ export const register = async (req:Request, res:Response, next: NextFunction) =>
         req.body = trim(req.body,['password'])
 
         //create User
-        const user:any = await User.create(req.body,'username email')
+        const user:any = await User.create(req.body)
         res.json({ email:user.email, username: user.username}) 
     } catch (error) {
         let validationErrors: Record<string,string> = {}
