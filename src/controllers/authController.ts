@@ -55,8 +55,7 @@ export const login = async ( req: Request, res: Response, next:NextFunction) => 
                     httpOnly:true,
                     maxAge:3600,
                     sameSite:true,
-                    path:'/',
-                    secure: process.env.NODE_ENV === 'production'
+                    path:'/'
                 }))
                 res.json({ username,email:user.email })
             }else{
