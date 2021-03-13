@@ -47,7 +47,7 @@ export const login = async ( req: Request, res: Response, next:NextFunction) => 
             const isMatch = await bcrypt.compare(password,user.password)
             //if its match set create token and set Cookie and send it to a Client back
             if(isMatch){
-                const token = jwt.sign({ username: user.username },process.env.JWT_SECRET!)
+                const token = jwt.sign({ username: user.username, email:user.email },process.env.JWT_SECRET!)
                 res.json({ username,email:user.email,token })
             }else{
                 throw new Error("User with that username or password doesn't exist")
