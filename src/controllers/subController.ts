@@ -94,7 +94,7 @@ export const uploadSubImage = async (req: Request, res: Response) => {
     const type = req.body.type
     try {
         if(type !== 'image' && type !== 'banner'){
-            fs.unlinkSync(file.path)
+            // fs.unlinkSync(file.path)
             res.status(400).json('Only images are allowed')
         }
         let oldImage:string = ''
@@ -106,7 +106,7 @@ export const uploadSubImage = async (req: Request, res: Response) => {
             sub.bannerUrn = file.filename
         }
         if(oldImage !== ''){
-            fs.unlinkSync(`public\\images\\${oldImage}`)
+            // fs.unlinkSync(`public\\images\\${oldImage}`)
         }
 
         res.json(await sub.save())
